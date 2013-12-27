@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ room.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="/faye/client.js"></script>
+  </head>
+  <body>
+    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <a class="navbar-brand" href="#">{{ room.name }}</a>
+      </div>
+    </header>
+    <div class="container">
+      <div id="messageContainer">
+      {% for message in messages %}
+        {% if message.username == username %}
+          <blockquote class="messageLeftTemplate">
+        {% else %}
+          <blockquote class="messageRightTemplate" class="pull-right">
+        {% endif %}
+          <p>{{ message.content }}</p>
+          <small>{{ message.username }} <cite>{{ message.created_at | date: "%H:%M" }}</cite></small>
+        </blockquote>
+      {% endfor %}
+      </div>
+    </div>
+    <footer class="navbar navbar-default navbar-fixed-bottom" role="talker">
+      <div class="container">
+        <div class="collapse navbar-collapse">
+          <p class="navbar-text">{{ username }}</p>
+          <form class="navbar-form navbar-left" role="talk" id="talk-form" action="{{ room.url }}" method="post" onsubmit="return submitForm();">
+            <div class="form-group">
+              <textarea class="form-control" placeholder="say something..." rows="3" name="content" id="talk-form-textarea"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+           </form>
+        <div>
+      </div>
+    </footer>
+    <script type="text/javascript">
+      var username = "{{ username }}";
+      var room_subscription = "{{ room.subscription }}";
+      var client = new Faye.Client('/faye', {timeout: 120});
+      var subscription = client.subscribe(room_subscription, function(data) {
+          if(data.username === username){
+            alert(2);
+          }else{
+            alert(3);
+          }
+          });
+      function submitForm() {
+        alert(1);
+        var area = document.getElementById("talk-form-textarea");
+        var data = {username: username, msg: area.value }
+        client.publish(room_subscription, data);
+        area.value = '';
+        return false;
+      }
+    </script>
+  </body>
+</html>
