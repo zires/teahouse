@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Teahouse
   class Room < Ohm::Model
     attribute :uuid
