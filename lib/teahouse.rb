@@ -6,6 +6,8 @@ require 'sinatra/base'
 require 'teahouse/room'
 require 'teahouse/message'
 module Teahouse
+  VERSION = '0.0.1'
+
   class App < Sinatra::Base
     use Faye::RackAdapter, mount: '/faye', timeout: 25
 
