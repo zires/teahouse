@@ -33,7 +33,13 @@ module Teahouse
     end
 
     def build_hash
-      {'name' => display_name, 'subscription' => "/rooms/#{uuid}"}
+      {
+        'room' => {
+          'name' => display_name,
+          'subscription' => "/rooms/#{uuid}"
+        },
+        'messages' => self.messages.map{ |m| m.build_hash }
+      }
     end
 
   end

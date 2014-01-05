@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "ohm", "~> 2.0.0.rc1"
 
   s.add_development_dependency "pry"
+  s.add_development_dependency "thin"
 end
