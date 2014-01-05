@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "sinatra"
-  s.add_dependency "liquid"
   s.add_dependency "faye"
   s.add_dependency "ohm", "~> 2.0.0.rc1"
 

@@ -1,7 +1,6 @@
 require 'ohm'
 require 'faye'
 require 'json'
-require 'liquid'
 require 'sinatra/base'
 require 'teahouse/room'
 require 'teahouse/message'
