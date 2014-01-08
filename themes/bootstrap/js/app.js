@@ -11,6 +11,9 @@ teahouseApp.controller('MainCtrl', function ($scope, $http, $location, $anchorSc
   var message_path = window.location.pathname.replace(/admins|users/, 'messages');
 
   var client = new Faye.Client('/faye', {timeout: 120});
+  // We need to disable both of these to get faye to use long-polling
+  client.disable('websocket')
+  client.disable('eventsource')
 
   $http
     .jsonp(data_path)
